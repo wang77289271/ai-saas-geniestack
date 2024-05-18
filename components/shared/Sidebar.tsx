@@ -42,12 +42,16 @@ const Sidebar = () => {
                     key={link.route}
                     className={`sidebar-nav_element group ${
                       isActive
-                        ? 'bg-purple-gradient text-white'
+                        ? 'bg-purple-gradient-2 text-white'
                         : 'text-zinc-700'
                     }`}
                   >
                     <Link className='sidebar-link' href={link.route}>
-                      <link.icon className={iconColor[link.label]} />
+                      <link.icon
+                        className={
+                          isActive ? 'text-white' : iconColor[link.label]
+                        }
+                      />
                       {link.label}
                     </Link>
                   </li>
@@ -64,7 +68,7 @@ const Sidebar = () => {
                     key={link.route}
                     className={`sidebar-nav_element group ${
                       isActive
-                        ? 'bg-purple-gradient text-white'
+                        ? 'bg-purple-gradient-2  text-white'
                         : 'text-zinc-700'
                     }`}
                   >

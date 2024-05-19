@@ -12,22 +12,40 @@ const iconColor: { [key: string]: string } = {
   'Buy Credits': 'text-yellow-400',
 }
 
-const Header = ({ type }: { type: TransformationTypeKey }) => {
-  const transformation = transformationTypes[type]
-  const title = transformation.title
-  const subtitle = transformation.subTitle
-  const Icon = transformation.headerIcon
+const Header = ({
+  title,
+  subtitle,
+  type,
+}: {
+  title?: string
+  subtitle?: string
+  type?: TransformationTypeKey
+}) => {
+  const transformation = transformationTypes[type!]
+  const transformTitle = transformation?.title
+  const transformSubtitle = transformation?.subTitle
+  const Icon = transformation?.headerIcon
   return (
     <>
       <div className='flex flex-row whitespace-nowrap items-center'>
         {Icon && (
           <div className='mr-4'>
-            <Icon width={32} height={32} className={iconColor[title]} />
+            <Icon
+              width={32}
+              height={32}
+              className={iconColor[transformTitle]}
+            />
           </div>
         )}
-        <h2 className='h2-bold text-dark-600'>{title}</h2>
+        <h2 className='h2-bold text-dark-600'>
+          {title ? title : transformTitle}
+        </h2>
       </div>
-      {subtitle && <p className='p-16-regular mt-4'>{subtitle}</p>}
+      {subtitle && (
+        <p className='p-16-regular mt-4'>
+          {subtitle ? subtitle : transformSubtitle}
+        </p>
+      )}
     </>
   )
 }

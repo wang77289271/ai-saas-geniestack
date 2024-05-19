@@ -1,3 +1,7 @@
+'use client'
+
+import { transformationTypes } from '@/constants'
+
 const iconColor: { [key: string]: string } = {
   Dashboard: 'text-sky-500',
   'Restore Image': 'text-pink-700',
@@ -8,15 +12,11 @@ const iconColor: { [key: string]: string } = {
   'Buy Credits': 'text-yellow-400',
 }
 
-const Header = ({
-  title,
-  subtitle,
-  icon: Icon,
-}: {
-  title: string
-  subtitle?: string
-  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>
-}) => {
+const Header = ({ type }: { type: TransformationTypeKey }) => {
+  const transformation = transformationTypes[type]
+  const title = transformation.title
+  const subtitle = transformation.subTitle
+  const Icon = transformation.headerIcon
   return (
     <>
       <div className='flex flex-row whitespace-nowrap items-center'>

@@ -1,13 +1,12 @@
 import { auth } from '@clerk/nextjs/server'
-import Image from 'next/image'
 import Link from 'next/link'
 
 import Header from '@/components/shared/Header'
 import TransformedImage from '@/components/shared/TransformedImage'
 import { Button } from '@/components/ui/button'
 import { getImageById } from '@/lib/actions/image.actions'
-import { getImageSize } from '@/lib/utils'
 import { DeleteConfirmation } from '@/components/shared/DeleteConfirmation'
+import TransformationsMediaUploader from '@/components/shared/TransformationsMediaUploader'
 
 const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
   const { userId } = auth()
@@ -22,11 +21,11 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
         <div className='p-14-medium md:p-16-medium flex gap-2'>
           <p className='text-dark-600'>Transformation:</p>
           <p className=' capitalize text-purple-400'>
-            {image.transformationType}
+            {image?.transformationType}
           </p>
         </div>
 
-        {image.prompt && (
+        {image?.prompt && (
           <>
             <p className='hidden text-dark-400/50 md:block'>&#x25CF;</p>
             <div className='p-14-medium md:p-16-medium flex gap-2 '>
@@ -60,17 +59,7 @@ const ImageDetails = async ({ params: { id } }: SearchParamProps) => {
       <section className='mt-10 border-t border-dark-400/15'>
         <div className='transformation-grid'>
           {/* MEDIA UPLOADER */}
-          <div className='flex flex-col gap-4'>
-            <h3 className='h3-bold text-dark-600'>Original</h3>
-
-            <Image
-              width={getImageSize(image.transformationType, image, 'width')}
-              height={getImageSize(image.transformationType, image, 'height')}
-              src={image.secureURL}
-              alt='image'
-              className='transformation-original_image'
-            />
-          </div>
+          <TransformationsMediaUploader image={image} />
 
           {/* TRANSFORMED IMAGE */}
           <TransformedImage

@@ -8,10 +8,13 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { gradientStyle, navLinks } from '@/constants'
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { getUserById } from '@/lib/actions/user.actions'
+import { IUser } from '@/lib/database/models/user.model'
+import { SignedIn, SignedOut, UserButton, useAuth } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { redirect, usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 const iconColor: { [key: string]: string } = {
   Dashboard: 'text-sky-500',
@@ -26,6 +29,17 @@ const iconColor: { [key: string]: string } = {
 
 const MobileNav = () => {
   const pathname = usePathname()
+  const [user, setUser] = useState<IUser | null>(null)
+
+  const { userId } = useAuth()
+
+  useEffect(() => {
+    if (!userId) redirect('/sign-in')
+    const getUser = async () => {
+      setUser(await getUserById(userId))
+    }
+    getUser()
+  }, [userId])
 
   return (
     <header className='header'>
@@ -93,6 +107,23 @@ const MobileNav = () => {
                       </li>
                     )
                   })}
+                  {user && (
+                    <li className='flex flex-row items-center ml-4 bg-gray-100 px-5 py-2 rounded-full'>
+                      <p className='font-semibold text-sm text-gray-700 mr-3'>
+                        Credits Available:{' '}
+                      </p>
+                      <Image
+                        src='/assets/icons/coins.svg'
+                        alt='coins'
+                        width={20}
+                        height={20}
+                        className='size-5 mr-2'
+                      />
+                      <p className='font-semibold text-sm text-gray-700'>
+                        {user.creditBalance}
+                      </p>
+                    </li>
+                  )}
                 </ul>
               </>
             </SheetContent>

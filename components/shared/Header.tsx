@@ -14,7 +14,7 @@ const Header = ({
   icon: Icon,
 }: {
   title: string
-  subtitle: string
+  subtitle?: string
   icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>
 }) => {
   return (

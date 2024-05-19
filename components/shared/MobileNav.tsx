@@ -1,7 +1,12 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from '@/components/ui/sheet'
 import { gradientStyle, navLinks } from '@/constants'
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
@@ -15,7 +20,7 @@ const iconColor: { [key: string]: string } = {
   'Object Remove': 'text-emerald-500',
   'Object Recolor': 'text-indigo-600',
   'Background Remove': 'text-yellow-500',
-  //   Profile: 'text-purple-600',
+  Profile: 'text-gray-600',
   'Buy Credits': 'text-yellow-400',
 }
 
@@ -49,14 +54,21 @@ const MobileNav = () => {
             </SheetTrigger>
             <SheetContent className='sheet-content sm:w-64'>
               <>
-                <div className='flex items-center pl-3'>
-                  <div className='relative w-6 h-6 mr-4'>
-                    <Image width={24} height={24} alt='Logo' src='/logo.png' />
-                  </div>
-                  <h1 className='text-2xl font-bold' style={gradientStyle}>
-                    GenieStack
-                  </h1>
-                </div>
+                <SheetClose asChild>
+                  <Link href='/dashboard' className='flex items-center pl-3'>
+                    <div className='relative w-6 h-6 mr-4'>
+                      <Image
+                        width={24}
+                        height={24}
+                        alt='Logo'
+                        src='/logo.png'
+                      />
+                    </div>
+                    <h1 className='text-2xl font-bold' style={gradientStyle}>
+                      GenieStack
+                    </h1>
+                  </Link>
+                </SheetClose>
 
                 <ul className='header-nav_elements'>
                   {navLinks.map((link) => {
@@ -69,13 +81,15 @@ const MobileNav = () => {
                         } p-18 flex whitespace-nowrap text-dark-700`}
                         key={link.route}
                       >
-                        <Link
-                          className='sidebar-link cursor-pointer'
-                          href={link.route}
-                        >
-                          <link.icon className={iconColor[link.label]} />
-                          {link.label}
-                        </Link>
+                        <SheetClose asChild>
+                          <Link
+                            className='sidebar-link cursor-pointer'
+                            href={link.route}
+                          >
+                            <link.icon className={iconColor[link.label]} />
+                            {link.label}
+                          </Link>
+                        </SheetClose>
                       </li>
                     )
                   })}

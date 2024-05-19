@@ -1,12 +1,14 @@
 'use client'
 
 import { gradientStyle, navLinks } from '@/constants'
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
+import { SignedIn, SignedOut, UserButton, useAuth } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import React from 'react'
+import { redirect, usePathname } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../ui/button'
+import { getUserById } from '@/lib/actions/user.actions'
+import { IUser } from '@/lib/database/models/user.model'
 
 const iconColor: { [key: string]: string } = {
   Dashboard: 'text-sky-500',
@@ -15,12 +17,23 @@ const iconColor: { [key: string]: string } = {
   'Object Remove': 'text-emerald-500',
   'Object Recolor': 'text-indigo-600',
   'Background Remove': 'text-yellow-500',
-  //   Profile: 'text-purple-600',
   'Buy Credits': 'text-yellow-400',
 }
 
 const Sidebar = () => {
   const pathname = usePathname()
+  const [user, setUser] = useState<IUser | null>(null)
+
+  const { userId } = useAuth()
+
+  useEffect(() => {
+    if (!userId) redirect('/sign-in')
+    const getUser = async () => {
+      setUser(await getUserById(userId))
+    }
+    getUser()
+  }, [userId])
+
   return (
     <aside className='sidebar'>
       <div className='flex size-full flex-col gap-4'>
@@ -73,8 +86,28 @@ const Sidebar = () => {
                     }`}
                   >
                     <Link className='sidebar-link' href={link.route}>
-                      <link.icon className={iconColor[link.label]} />
-                      {link.label}
+                      <div
+                        className={`flex flex-row w-full ${
+                          link.label === 'Buy Credits' && 'justify-between'
+                        }`}
+                      >
+                        <div className='flex flex-row gap-2'>
+                          <link.icon className={iconColor[link.label]} />
+                          {link.label}
+                        </div>
+                        {user && link.label === 'Buy Credits' && (
+                          <div className='flex flex-row items-center'>
+                            <Image
+                              src='/assets/icons/coins.svg'
+                              alt='coins'
+                              width={20}
+                              height={20}
+                              className='size-5 mr-2'
+                            />
+                            {user.creditBalance}
+                          </div>
+                        )}
+                      </div>
                     </Link>
                   </li>
                 )

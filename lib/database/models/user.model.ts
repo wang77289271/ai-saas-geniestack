@@ -14,3 +14,14 @@ const UserSchema = new Schema({
 const User = models?.User || model('User', UserSchema)
 
 export default User
+
+export interface IUser {
+  clerkId: string
+  email: string
+  username: string
+  photo: string
+  firstName?: string
+  lastName?: string
+  planId: number
+  creditBalance: number
+}

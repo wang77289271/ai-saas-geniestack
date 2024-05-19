@@ -2,7 +2,7 @@ import {
   CircleUserRound,
   ImageIcon,
   ImageMinus,
-  LayoutDashboard,
+  LayoutDashboardIcon,
   Palette,
   ScissorsSquare,
   ShoppingBag,
@@ -13,7 +13,7 @@ export const navLinks = [
   {
     label: 'Dashboard',
     route: '/dashboard',
-    icon: LayoutDashboard,
+    icon: LayoutDashboardIcon,
   },
   {
     label: 'Image Restore',

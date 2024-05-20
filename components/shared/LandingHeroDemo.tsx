@@ -5,8 +5,8 @@ import LandingDemoTextCard from './LandingDemoTextCard'
 
 const LandingHeroDemo = () => {
   return (
-    <div className='hidden md:flex flex-row w-[90%] lg:w-[80%] max-w-[1440px] h-full mx-auto'>
-      <div className='flex-1 flex flex-col items-end mr-12 mt-12'>
+    <div className='flex flex-row w-[90%] lg:w-[80%] max-w-[1440px] h-full mx-auto'>
+      <div className='flex-1 hidden md:flex flex-col items-end mr-12 mt-12'>
         <div className='flex flex-col justify-center items-center'>
           <LandingDemoTextCard title='Object to Recolor' text='T-shirt' />
           <LandingDemoTextCard
@@ -19,7 +19,7 @@ const LandingHeroDemo = () => {
           <LandingDemoTextCard title='Remove Object' text='Squirrel' />
         </div>
       </div>
-      <div className='flex-1 flex justify-center'>
+      <div className='flex-1 hidden md:flex justify-center'>
         <Image
           alt='Transformation Demo'
           src='/assets/images/demo-transformation.jpg'

@@ -22,7 +22,7 @@ const LandingHero = () => {
   const { isSignedIn } = useAuth()
   return (
     <div className='font-bold pt-36 text-center space-y-5 bg-landing-hero bg-cover bg-no-repeat relative'>
-      <div className='min-h-[55vh]'>
+      <div className='min-h-[38vh] md:min-h-[55vh]'>
         <div className='transition-all space-y-5 font-extrabold mb-12'>
           <h1
             className={cn(

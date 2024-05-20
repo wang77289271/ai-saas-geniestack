@@ -1,14 +1,11 @@
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import React from 'react'
+import LandingHero from '@/components/shared/LandingHero'
+import LandingNav from '@/components/shared/LandingNav'
 
 const Home = () => {
   return (
-    <div className='w-full h-[100vh] flex flex-col justify-center items-center'>
-      Home
-      <Button asChild>
-        <Link href='/dashboard'>Go to Dashboard</Link>
-      </Button>
+    <div className='h-full'>
+      <LandingNav />
+      <LandingHero />
     </div>
   )
 }
